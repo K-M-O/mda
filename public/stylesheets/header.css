@@ -1,0 +1,15 @@
+.header{
+    background-color: #ac3939;
+    grid-row: 1/2;
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 20px 150px 1fr 20px 40px 20px;
+    place-items: center;
+}
+.navIcon{
+    grid-column: 2/3;
+}
+.navMenuBtn{
+    grid-column: 5/6;
+    cursor: pointer;
+}

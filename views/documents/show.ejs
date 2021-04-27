@@ -1,0 +1,48 @@
+<head>
+    <link rel="stylesheet" href="/stylesheets/create.css">
+    <title>MDA | <%= document.name %></title>
+</head>
+<div class="form createForm">
+    <form action="" method="post">
+        <div>
+            <img style="margin-left: 100px;" src="<%= images[0].imagePath %>" class="upload-form">
+        </div>
+        <div>Name : <%= document.name %></div>
+        <div>description: </div>
+        <div><%= document.description %></div>
+        <% var rawDate = document.publishedAt.toString() %>
+        <% var date = `${rawDate.split(' ')[2]} ${rawDate.split(' ')[1]} ${rawDate.split(' ')[3]}` %>
+        <div>Publish date: <%= date %></div>
+        <div>barCode: <%= document.barCode %></div>
+        <div>Folder : <%= document.folder %></div>
+        <div>Collection : <%= document.col %></div>
+        <div>Archive : <%= document.archive %></div>
+        <div>keywords: </div>
+        <div>Publisher : <%= document.keywords.publisher %></div>
+        <div>Period : <%= document.keywords.period %></div>
+        <div>Civilization : <%= document.keywords.civilization %></div>
+        <div>Location : <%= document.keywords.location %></div>
+        <div>Value : <%= document.keywords.value %></div>
+        <div>Font : <%= document.keywords.font %></div>
+        <div>Classification : <%= document.keywords.classification %></div>
+        <div>Form : <%= document.keywords.form %></div>
+        <% if (document.keywords.digital) { %>
+            <div>Digital</div>
+        <% } else { %>
+            <div>Not digital</div>
+        <% } %>
+        <% if (checkAdmin) { %>
+            <div>
+                <a href="/d/manage/document/<%= document.id %>"><button type="button">manage</button></a>
+                <button onclick="removeFunc()" type="button">remove</button>
+                <script>
+                    function removeFunc(){
+                        document.forms["removeForm"].submit();
+                    }
+                </script>
+            </div>
+        <% } else { %>
+        <% } %>
+    </form>
+</div>
+<form name="removeForm" action="/d/manage/<%= locals.type %>/<%= locals.id %>/remove?_method=DELETE" method="post"></form>

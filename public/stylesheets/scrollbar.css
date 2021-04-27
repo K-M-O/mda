@@ -1,0 +1,49 @@
+.scrollbar{
+    grid-row: 2/-1;
+    grid-column: 2/-1;
+    display: grid;
+    z-index: 100;
+    grid-template-columns: 3px 12px 3px;
+    grid-template-rows: 8px 1fr 8px;
+}
+.scroller{
+    grid-column: 2/3;
+    grid-row: 2/3;
+    width: 100%;
+    height: 100%;
+    border-radius: 45px;
+    transition: 1s;
+}
+.scrollblock{
+    display: none;
+    grid-column: 1/-1;
+    grid-row: 2/-1;
+    width: 100%;
+    height: 100%;
+    opacity: 100;
+    z-index: 1000;
+}
+.position{
+    border-radius: 45px;
+    width: 100%;
+    margin-top: 0px;
+    transition: 0.4s;
+    display: grid;
+    grid-template-rows: 1px 1fr 1px;
+}
+.scrollbar:hover .scroller{
+    background-color: #cccccc;
+    transition: 0.4s;
+}
+.scrollbar:hover .position{
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: 1s;
+}
+.scroller.hover{
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: 0.4s;
+}
+.position.hover{
+    background-color: #cccccc;
+    transition: 1s;
+}

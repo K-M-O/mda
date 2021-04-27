@@ -1,0 +1,35 @@
+<head>
+    <link rel="stylesheet" href="/stylesheets/menu.css">
+    <script defer src="/javascripts/menu.js"></script>
+</head>
+<div class="menu">
+    <div class="menuBlock">
+        <div class="innerMenu">
+            <div class="menuItem"><a href="/">home</a></div>
+            <% if (locals.isAdmin === "true") { %>
+                <div class="menuItem"><a href="/a/adminpanel">admin panel</a></div>
+            <% } else { %>
+                <style>
+                    .innerMenu{
+                        grid-template-rows: 80px repeat(4,80px) 1fr 80px;
+                    }
+                    @media screen and (max-height: 650px){
+                        .innerMenu {
+                            grid-template-rows: 1fr repeat(4,1fr) auto 1fr;
+                        }
+                    }
+                </style>
+            <% } %>
+            <div class="menuItem"><a href="/all/archives">Archives</a></div>
+            <div class="menuItem"><a href="/all/collections">Collections</a></div>
+            <div class="menuItem"><a href="/all/folders">Folders</a></div>
+            <div class="menuItem"><a href="/all/documents">Documents</a></div>
+            <div></div>
+            <% if (locals.auth === "true") { %>
+                <div class="menuItem authOption"><a href="/o/logout">Logout</a></div>
+            <% } else { %>
+                <div class="menuItem authOption"><a href="/o/login">Login</a></div>
+            <% } %>
+        </div>
+    </div>
+</div>

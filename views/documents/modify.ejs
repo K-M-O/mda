@@ -1,0 +1,70 @@
+<head>
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script defer src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+    <script defer src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script defer src="/javascripts/fileUploader.js"></script>
+    <link rel="stylesheet" href="/stylesheets/create.css">
+    <% if (locals.id) { %>
+        <title>MDA | Manage <%= locals.type %></title>
+    <% } else { %>
+        <title>MDA | Create <%= locals.type %></title>
+    <% } %>
+</head>
+<% if (locals.type === 'document') { %>
+    <div class="form createForm">
+        <h2 id="message" style="margin-top: 30px;"></h2>
+        <% if (locals.id) { %>
+            <form action="/d/manage/<%= locals.type %>/<%= locals.id %>/update" method="post">
+        <% } else { %>
+            <form action="" method="post">
+        <% } %>
+                <div>image: </div>
+                <div>
+                    <label>
+                        <input type="file" name="images" class="filepond upload-form">
+                    </label>
+                </div>
+                <div><label>Name: <input name="name" type="text" placeholder="document name"></label></div>
+                <div>description: </div>
+                <div>
+                    <textarea name="description" id="" placeholder="document description"></textarea>
+                </div>
+                <div><label>Published at: <input name="pubat" type="date" placeholder="document name"></label></div>
+                <div><label>Folder: <input name="folder" type="text" placeholder="folder name"></label></div>
+                <div><label>Collection: <input name="col" type="text" placeholder="collection name"></label></div>
+                <div><label>Archive: <input name="archive" type="text" placeholder="archive name"></label></div>
+                <div>keywords: </div>
+                <div style="display: grid;grid-template-columns: 1fr 1fr 1fr;place-items: center;">
+                    <input name="publisher" class="keywords" type="text" placeholder="publisher">
+                    <input name="period" class="keywords" type="text" placeholder="period">
+                    <input name="civilization" class="keywords" type="text" placeholder="civilization">
+                </div>
+                <div style="display: grid;grid-template-columns: 1fr 1fr 1fr;place-items: center;">
+                    <input name="location" class="keywords" type="text" placeholder="location">
+                    <input name="value" class="keywords" type="text" placeholder="value">
+                    <input name="font" class="keywords" type="text" placeholder="font">
+                </div>
+                <div style="display: grid;grid-template-columns: 1fr 1fr 1fr;place-items: center;">
+                    <input name="classification" class="keywords" type="text" placeholder="classification">
+                    <input name="form" class="keywords" type="text" placeholder="form">
+                    <div style="place-items: center;height: 100%;">digital?<input class="keywords" style="width: 30px;height: 30px;margin: 15px;padding: 0px;" name="digital" id="digital" type="checkbox" placeholder=""></div>
+                </div>
+                <% if (locals.id) { %>
+                    <button onclick="document.querySelectorAll('.keywords#digital')[0].value = document.querySelectorAll('.keywords#digital')[0].checked">update</button>
+                <% } else { %>
+                    <button onclick="document.querySelectorAll('.keywords#digital')[0].value = document.querySelectorAll('.keywords#digital')[0].checked">create</button>
+                <% } %>
+        </form>
+    </div>
+<% } else { %>
+    <% if (locals.id) { %>
+        <div class="form" style="width: 100%;height: 100%;display: grid;place-items: center;">Update <%= locals.type %> page is currently unavailable</div>
+    <% } else { %>
+        <div class="form" style="width: 100%;height: 100%;display: grid;place-items: center;">Create <%= locals.type %> page is currently unavailable</div>
+    <% } %>
+<% }%>
+<script>if (window.location.search){var message = window.location.search.split('=')[1],mail = '';message.split('%20').forEach(word=>{mail += `${word} `});document.getElementById('message').innerText = mail}</script>

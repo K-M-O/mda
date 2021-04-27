@@ -1,0 +1,126 @@
+<head>
+    <link rel="stylesheet" href="/stylesheets/adminpanel.css">
+    <script defer src="/javascripts/adminpanel.js"></script>
+    <title>MDA | aPanel</title>
+</head>
+<div class="adminPanelForm form">
+    <div class="border" style="grid-column: 2/7;grid-row: 2/3;"></div>
+    <div class="border" style="grid-column: 2/7;grid-row: 4/5;"></div>
+    <div class="border" style="grid-column: 2/3;grid-row: 3/4;"></div>
+    <div class="border" style="grid-column: 4/5;grid-row: 3/4;"></div>
+    <div class="border" style="grid-column: 6/7;grid-row: 3/4;"></div>
+    <div class="adminPanelList">
+        <div id="opt1" class="item selected">
+            <h2>New</h2>
+            <div class="border"></div>
+        </div>
+        <div id="opt2" class="item">
+            <h2>Reports</h2>
+            <div class="border"></div>
+        </div>
+        <div id="opt3" class="item">
+            <h2>Users</h2>
+            <div class="border"></div>
+        </div>
+        <div id="opt4" class="item">
+            <h2>Requests</h2>
+            <div class="border"></div>
+        </div>
+        <div id="opt5" class="item">
+            <h2>Work plan</h2>
+            <div class="border"></div>
+        </div>
+        <div id="opt6" class="item">
+            <h2>Analysis</h2>
+            <div class="border"></div>
+        </div>
+    </div>
+    <div class="adminPanelContent">
+        <div class="opt1 option" style="display: grid;">
+            <a class="newBtn" href="/d/new/document">
+                <img src="/images/icons/add.svg" alt="">
+                <h2>Document</h2>
+            </a>
+            <div class="border"></div>
+            <a class="newBtn" href="/d/new/folder">
+                <img src="/images/icons/add.svg" alt="">
+                <h2>Folder</h2>
+            </a>
+            <div class="border"></div>
+            <a class="newBtn" href="/d/new/collection">
+                <img src="/images/icons/add.svg" alt="">
+                <h2>Collection</h2>
+            </a>
+            <div class="border"></div>
+            <a class="newBtn" href="/d/new/archive">
+                <img src="/images/icons/add.svg" alt="">
+                <h2>Archive</h2>
+            </a>
+        </div>
+        <div class="opt2 option" style="display: none;">
+            <a class="newBtn" href="/a/reports/admin/all">
+                <img src="/images/icons/adminReport.png" alt="">
+                <h2>Admin reports</h2>
+            </a>
+            <div class="border"></div>
+            <a class="newBtn" href="/a/reports/users/all">
+                <img src="/images/icons/usersReport.png" alt="">
+                <h2>Users reports</h2>
+            </a>
+            <div class="border"></div>
+            <a class="newBtn" href="/a/reports/archive/all">
+                <img src="/images/icons/archiveReport.png" alt="">
+                <h2>Archive reports</h2>
+            </a>
+            <div class="border"></div>
+            <a class="newBtn" href="/a/reports/errors/all">
+                <img src="/images/icons/errorReport.png" alt="">
+                <h2>Errors reports</h2>
+            </a>
+        </div>
+        <div class="opt3 option" style="display: none;">
+            <div class="insideContent">
+                <div class="scrollableContent">
+                    <div class="usersTable">
+                        <% if (users.length != 0) { %>
+                            <% users.forEach(user => { %>
+                                <form class="user" action="/a/adminpanel/user/<%= user.id %>/?_method=DELETE" method="post">
+                                    <input type="text" name="userId" style="display: none;" value="<%= user.id %>">
+                                    <h2 class="username" style="margin-left: 20px;"><%= user.nId %></h2>
+                                    <button style="border-width: 0px;outline-width: 0px;" type="submit"><img src="/images/icons/delete.svg" width="30" height="30" class="userDelete" alt="" style="cursor: pointer;"></button>
+                                </form>
+                                <div class="border" style="height: 1px;"></div>
+                            <% }) %>
+                        <% } else { %>
+                            <h2 style="place-self: start center;">no users found</h2>
+                        <% } %>
+                    </div>
+                    <div class="border"></div>
+                </div>
+            </div>
+        </div>
+        <div class="opt4 option" style="display: none;">
+            <div class="insideContent">
+                <div class="scrollableContent">
+                    <div class="usersTable">
+                        <% if (users.length != 0) { %>
+                            <% users.forEach(user => { %>
+                                <form class="user" action="/a/adminpanel" method="GET">
+                                    <input type="text" name="userId" style="display: none;" value="<%= user.id %>">
+                                    <h2 class="username" style="margin-left: 20px;">Request: <%= user.nId %></h2>
+                                    <button style="border-width: 0px;outline-width: 0px;" type="submit"><img src="/images/icons/filter.svg" width="30" height="30" class="userDelete" alt="" style="cursor: pointer;"></button>
+                                </form>
+                                <div class="border" style="height: 1px;"></div>
+                            <% }) %>
+                        <% } else { %>
+                            <h2 style="place-self: start center;">no users found</h2>
+                        <% } %>
+                    </div>
+                    <div class="border"></div>
+                </div>
+            </div>
+        </div>
+        <div class="opt5 option" style="display: none;">This feature is currently unavailable</div>
+        <div class="opt6 option" style="display: none;">This feature is currently unavailable</div>
+    </div>
+</div>

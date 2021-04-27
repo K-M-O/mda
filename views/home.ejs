@@ -1,0 +1,73 @@
+<head>
+    <link rel="stylesheet" href="/stylesheets/home.css">
+    <script src="/javascripts/home.js"></script>
+    <% if (search) { %>
+        <title>MDA | (<%= count %>)</title>
+    <% } else { %>
+    <title>Modern Digital Archive</title>
+    <% } %>
+</head>
+<div class="homeForm form">
+    <img src="/images/home.jpg" alt="" style="z-index: 1;">
+    <form action="/" class="searcharea" method="get">
+        <input name="ser" id="in" type="text" height="50" placeholder="Search by document name, archive, collection or group" style="padding-left: 8px;">
+        <button type="submit" style="cursor: pointer;">Search</button>
+        <div class="searchFilter">
+            <div class="datebar">
+                <div><input type="date" name="from" style="width: 100px;outline-width: 0px;border-width: 0px;height: 40px;font-size: 10px;cursor: pointer;"></div>
+                <div></div>
+                <div><input type="date" name="to" style="width: 100px;outline-width: 0px;border-width: 0px;height: 40px;font-size: 10px;cursor: pointer;"></div>
+            </div>
+            <div></div>
+            <div class="keywords">
+                <div>
+                    <select name="" id="" style="width: 80px;outline-width: 0px;border-width: 0px;height: 40px;font-size: 12px;background-color: #f2f2f2;cursor: pointer;">
+                        <option id="selected" value="" selected disabled>keywords</option>
+                        <option value="publisher">publisher</option>
+                        <option value="period">period</option>
+                        <option value="civilization">civilization</option>
+                        <option value="location">location</option>
+                        <option value="value">value</option>
+                        <option value="font">font</option>
+                        <option value="classification">classification</option>
+                        <option value="form">form</option>
+                        <option value="digital">digital</option>
+                    </select>
+                </div>
+                <input type="text" name="keys" id="keys" style="display: none;">
+                <div><input type="text" id="val" placeholder="value" style="width: 100px;outline-width: 0px;border: none;height: 40px;font-size: 14px;background-color: #f2f2f2;"></div>
+                <div></div>
+                <div><button style="width: 70px;outline-width: 0px;border-width: 0px;height: 40px;font-size: 14px; background-color: #ac3939;color: #f2f2f2;cursor: pointer;" onclick="add()" type="button">add K:0</button></div>
+            </div>
+        </div>
+    </form>
+    <div class="resultsBorder">
+        <div style="grid-row: 5/-1;grid-column: 1/-1;"></div>
+        <div class="border" style="grid-column: 3/4;grid-row: 2/3;"></div>
+        <div class="border" style="grid-column: 2/3;grid-row: 3/4;"></div>
+        <div class="border" style="grid-column: 4/5;grid-row: 3/4;"></div>
+        <div class="border" style="grid-column: 3/4;grid-row: 4/5;"></div>
+        <% if (search) { %>
+            <div class="results">
+                <% results.forEach(result => { %>
+                    <div class="result">
+                        <a href="/d/show/<%= result[0] %>">
+                            <img src="<%= result[2] %>" alt="">
+                            <h2><%= result[1] %></h2>
+                        </a>
+                        <div class="border"></div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="noResults">
+                <h2 class="noResultsMessage">No results found!</h2>
+                <h2 class="noResultsMessage">You can search by document name, archive, collection or group</h2>
+                <h2 class="noResultsMessage">You can search by date by typing: date: From: mm/dd/yyyy To: mm/dd/yyyy</h2>
+                <h2 class="noResultsMessage">You can search by document description by typing anyword of the description.</h2>
+                <h2 class="noResultsMessage">you can search by keywords like location, period, civilization by typing: keywords: keyword:value</h2>
+                <h2 class="noResultsMessage">keywords: publisher, period, civilization, location, value, font, classification, form, digital</h2>
+            </div>
+        <% } %>
+    </div>
+</div>

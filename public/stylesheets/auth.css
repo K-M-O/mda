@@ -1,0 +1,66 @@
+.authForm{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
+.authForm .innerForm{
+    background-color: #dfdfdf;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    place-items: center;
+    padding: 20px;
+}
+.authForm .innerForm .heading{
+    font-size: 34px;
+    margin-bottom: 50px;
+    color: #232323;
+    cursor: default;
+}
+.authForm .innerForm .switch{
+    font-size: 12px;
+    margin-top: 20px;
+    color: #818181;
+}
+.authForm .innerForm .switch a{
+    font-size: 12px;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #232323;
+    transition: 0.4s;
+}
+.authForm .innerForm .switch a:hover{
+    font-size: 12px;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #ac3939;
+    transition: 0.4s;
+}
+.authForm .innerForm input{
+    padding: 8px;
+    width: 300px;
+    height: 40px;
+    margin-top: 40px;
+    border-width: 0px;
+    outline-width: 0px;
+}
+.authForm .innerForm input:-webkit-autofill,
+.authForm .innerForm input:-webkit-autofill:hover, 
+.authForm .innerForm input:-webkit-autofill:focus{
+    border: 0px;
+    -webkit-text-fill-color: #232323;
+    transition: background-color 3000s ease-in-out 0s;
+}
+.authForm .innerForm button{
+    padding: 8px;
+    width: 150px;
+    height: 50px;
+    margin-top: 40px;
+    border-width: 0px;
+    outline-width: 0px;
+    background-color: #ac3939;
+    color: #f2f2f2;
+    cursor: pointer;
+}

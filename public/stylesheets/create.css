@@ -1,0 +1,64 @@
+.createForm{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
+.createForm form{
+    display: grid;
+    width: 500px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    height: max-content;
+    background-color: #dfdfdf;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 20px;
+    margin: 30px;
+}
+.createForm form div{
+    width: 100%;
+    padding: 10px;
+}
+.createForm form input{
+    width: 300px;
+    border: none;
+    outline: none;
+    height: 40px;
+    padding: 8px;
+    font-size: 14px;
+}
+.createForm form .keywords{
+    width: 100px;
+    border: none;
+    outline: none;
+    height: 40px;
+    padding: 8px;
+    font-size: 12px;
+    margin-left: -20px;
+}
+.createForm form button{
+    width: 150px;
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 20px;
+    color: #f2f2f2;
+    background-color: #ac3939;
+    place-self: center;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.upload-form{
+    height: 319px;
+    max-width: 300px;
+    margin: auto;
+}
+.createForm form textarea{
+    width: 450px;
+    border: none;
+    outline: none;
+    height: 120px;
+    padding: 8px;
+    resize: none;
+}
