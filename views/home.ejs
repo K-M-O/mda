@@ -52,7 +52,11 @@
                 <% results.forEach(result => { %>
                     <div class="result">
                         <a href="/d/show/<%= result[0] %>">
-                            <img src="<%= result[2] %>" alt="">
+                            <% if (result[2] == null) { %>
+                                <img src="/images/noImage.jpg" alt="">
+                            <% } else { %>
+                                <img src="<%= result[2] %>" alt="">
+                            <% } %>
                             <h2><%= result[1] %></h2>
                         </a>
                         <div class="border"></div>
