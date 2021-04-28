@@ -98,6 +98,16 @@
     grid-template-columns: 1fr;
     height: max-content;
 }
+.resultsBorder .results .loading{
+    grid-row: 1/-1;
+    grid-column: 1/-1;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    place-items: center;
+}
 .resultsBorder .noResults{
     grid-row: 3/4;
     grid-column: 3/4;

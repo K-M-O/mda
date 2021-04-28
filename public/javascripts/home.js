@@ -11,6 +11,7 @@ if (window.location.search !== ''){
         queKeys[que[0]] = que[1]
     })
     socket.emit('queue',queKeys)
+    alert('off')
 } else {
     document.title = `Modern Digital Archive`
     document.querySelectorAll('.noResults')[0].style.display = 'grid'
@@ -18,6 +19,7 @@ if (window.location.search !== ''){
     document.querySelectorAll('.results .loading')[0].style.display = 'none'
 }
 socket.on('queue',results=>{
+    alert('on')
     if (results.length != 0){
         document.title = `MDA | (${results.length})`
         document.querySelectorAll('.results .loading')[0].style.display = 'none'

@@ -2,6 +2,7 @@ var Document = require('./models/document')
 var Image = require('./models/image')
 exports.quer = (socket)=>{
     socket.on('queue', async queKeys=>{
+        console.log('here');
         try {
             let query = Document.find().sort({ createdAt: 'desc' })
             var from,to,keywords = {},results = {}
@@ -125,6 +126,7 @@ exports.quer = (socket)=>{
                     let image = await Image.findOne({owner: id}).exec()
                     searchResults[searchResults.length] = [document.id,document.name,image.imagePath]
                     if (i-searchResults.length <= 1){
+                        console.log('there');
                         socket.emit('queue',searchResults)
                     }
             }
