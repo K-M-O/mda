@@ -19,11 +19,12 @@ const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
 const io = new Server(server)
+module.exports = io
 const sockets = require('./sockets')
-
 // server routes.
 
 io.on('connection',sockets.quer)
+io.on('connection',sockets.results)
 
 const adminRoute = require('./routes/adminRo')
 const authRoute = require('./routes/authRo')

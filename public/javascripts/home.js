@@ -1,9 +1,5 @@
 if (window.location.search !== ''){
     var socket = io()
-    document.title = `MDA | Loading`
-    document.querySelectorAll('.noResults')[0].style.display = 'none'
-    document.querySelectorAll('.results')[0].style.display = 'grid'
-    document.querySelectorAll('.results .loading')[0].style.display = 'grid'
     var query = window.location.search
     var queKeys = {}
     query.split('?')[1].split("&").forEach(que=>{
@@ -11,15 +7,25 @@ if (window.location.search !== ''){
         queKeys[que[0]] = que[1]
     })
     socket.emit('queue',queKeys)
-    alert('off')
 } else {
     document.title = `Modern Digital Archive`
     document.querySelectorAll('.noResults')[0].style.display = 'grid'
     document.querySelectorAll('.results')[0].style.display = 'none'
     document.querySelectorAll('.results .loading')[0].style.display = 'none'
 }
-socket.on('queue',results=>{
-    alert('on')
+var once = true
+socket.on('loading',check=>{    
+    if (check){
+        console.log(check);
+        document.title = `MDA | Loading`
+        document.querySelectorAll('.noResults')[0].style.display = 'none'
+        document.querySelectorAll('.results')[0].style.display = 'grid'
+        document.querySelectorAll('.results .loading')[0].style.display = 'grid'
+    }else{
+        socket.emit('request',true)
+    }
+})
+socket.on('results',results=>{
     if (results.length != 0){
         document.title = `MDA | (${results.length})`
         document.querySelectorAll('.results .loading')[0].style.display = 'none'
