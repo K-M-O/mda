@@ -1,3 +1,5 @@
+var socket = io()
+
 var loc = 0,keywords = '',i = 0
 document.querySelectorAll('.dataListener')[0].addEventListener('wheel',(e)=>{
     loc += (e.deltaY * document.querySelectorAll('.scroller')[0].clientHeight) / document.querySelectorAll('.content')[0].clientHeight
