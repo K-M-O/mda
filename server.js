@@ -15,8 +15,16 @@ const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const partials = require('./middleware/getPartials')
 const app = express()
+const http = require('http')
+const server = http.createServer(app)
+const { Server } = require('socket.io')
+const io = new Server(server)
 
 // server routes.
+
+io.on('connection',(socket)=>{
+    console.log('1 new user');
+})
 
 const adminRoute = require('./routes/adminRo')
 const authRoute = require('./routes/authRo')
@@ -53,4 +61,4 @@ app.use('/d', documentRoute)
 app.use('/', homeRoute)
 app.use('/all/:name',homeRoute)
 
-app.listen(process.env.PORT || 3000)
+server.listen(process.env.PORT || 3000)
