@@ -19,12 +19,11 @@ const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
 const io = new Server(server)
+const sockets = require('./sockets')
 
 // server routes.
 
-io.on('connection',(socket)=>{
-    console.log('1 new user');
-})
+io.on('connection',sockets.quer)
 
 const adminRoute = require('./routes/adminRo')
 const authRoute = require('./routes/authRo')

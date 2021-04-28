@@ -1,4 +1,46 @@
-var socket = io()
+if (window.location.search !== ''){
+    var socket = io()
+    document.title = `MDA | Loading`
+    document.querySelectorAll('.noResults')[0].style.display = 'none'
+    document.querySelectorAll('.results')[0].style.display = 'grid'
+    document.querySelectorAll('.results .loading')[0].style.display = 'grid'
+    var query = window.location.search
+    var queKeys = {}
+    query.split('?')[1].split("&").forEach(que=>{
+        que = que.split("=")
+        queKeys[que[0]] = que[1]
+    })
+    socket.emit('queue',queKeys)
+} else {
+    document.title = `Modern Digital Archive`
+    document.querySelectorAll('.noResults')[0].style.display = 'grid'
+    document.querySelectorAll('.results')[0].style.display = 'none'
+    document.querySelectorAll('.results .loading')[0].style.display = 'none'
+}
+socket.on('queue',results=>{
+    if (results.length != 0){
+        document.title = `MDA | (${results.length})`
+        document.querySelectorAll('.results .loading')[0].style.display = 'none'
+        var o = document.querySelectorAll('.results')[0]
+        results.forEach(result=>{
+            var d = document.createElement('div')
+            d.classList.add('result')
+            var a = document.createElement('a')
+            a.href = `/d/show/${result[0]}`
+            var img = document.createElement('img')
+            img.src = `${result[2]}`
+            var h2 = document.createElement('h2')
+            h2.innerText = `${result[1]}`
+            var d2 = document.createElement('div')
+            d2.classList.add('border')
+            a.appendChild(img)
+            a.appendChild(h2)
+            d.appendChild(a)
+            d.appendChild(d2)
+            o.appendChild(d)
+        })
+    }
+})
 
 var loc = 0,keywords = '',i = 0
 document.querySelectorAll('.dataListener')[0].addEventListener('wheel',(e)=>{
