@@ -1,4 +1,5 @@
 var Document = require('./models/document')
+const image = require('./models/image')
 var Image = require('./models/image')
 const io = require('./server')
 var done = false
@@ -9,117 +10,54 @@ exports.quer = (socket)=>{
     })
 }
 async function processStart(queKeys){
-    try {
-        let query = Document.find().sort({ createdAt: 'desc' })
-        var from,to,keywords = {},results = {}
-        if (queKeys.from == '' || queKeys.to == ''){
-            from = null
-            to = null
-        } else {
-            from = queKeys.from
-            to = queKeys.to
-            from = from.split('-')
-            to = to.split('-')
-        }
-        if (queKeys.keys == ''){
-            keywords = {}
-        } else {
-            queKeys.keys.split('%3B').forEach(key=>{
-                if (key.indexOf('%3A') > -1){
-                    keywords[key.split('%3A')[0]] = key.split('%3A')[1]
-                }
-            })
-        }
-        var qinput = ''
-        queKeys.ser.split('').forEach(letter=>{
-            if(letter.match(/[ a-zA-Z]/)){
-                qinput += letter
-            }else if (letter === '+'){
-                qinput += " "
+    let query = Document.find().sort({ createdAt: 'desc' })
+    var from,to,keywords = {},results = {}
+    if (queKeys.from == '' || queKeys.to == ''){
+        from = null
+        to = null
+    } else {
+        from = queKeys.from
+        to = queKeys.to
+    }
+    if (queKeys.keys == ''){
+        keywords = {}
+    } else {
+        queKeys.keys.split('%3B').forEach(key=>{
+            if (key.indexOf('%3A') > -1){
+                keywords[key.split('%3A')[0]] = key.split('%3A')[1]
             }
         })
-        
+    }
+    var qinput = ''
+    queKeys.ser.split('').forEach(letter=>{
+        if(letter.match(/[ a-zA-Z]/)){
+            qinput += letter
+        }else if (letter === '+'){
+            qinput += " "
+        }
+    })
+    if (qinput != null && qinput != '') {
         query = query.regex('name', new RegExp(qinput, 'i'))
-        var names = await query.exec()
-            names.forEach(item=>{
-                i ++
-                if (results[item.id] == undefined) {
-                    results[item.id] = {name:item.name,keywords:item.keywords,pubat:item.publishedAt}
-                }
-                if (i == arr.length){
-                    convert(results)
-                }
-            })
-        function convert(obj){
-            var filteredResults = Object.keys(obj).map((key)=>[key,obj[key]])
-            dateFilter(filteredResults)
-        }
-        function dateFilter(preResults){
-            var filteredResults = [],i = 0
-            if (from == null || to == null){
-                keywordsFilter(preResults)
-            } else {
-                preResults.forEach(res=>{
-                    i ++
-                    var date = res[1].pubat.getFullYear()+'-' + (res[1].pubat.getMonth()+1) + '-'+res[1].pubat.getDate();
-                    var splitDate = date.split('-')
-                    if (parseInt(to[0]) >= parseInt(splitDate[0]) && parseInt(splitDate[0]) >= parseInt(from[0])){
-                        if (parseInt(to[1]) >= parseInt(splitDate[1]) && parseInt(splitDate[1]) >= parseInt(from[1])){
-                            if (parseInt(to[2]) >= parseInt(splitDate[2]) && parseInt(splitDate[2]) >= parseInt(from[2])){
-                                filteredResults[filteredResults.length] = res
-                            }
-                        }
-                    }
-                    if (i == preResults.length){
-                        keywordsFilter(filteredResults)
-                    }
-                })
+    }
+    var que = await query.exec()
+    var results = [],i = 0
+    if ( que.length != 0){
+        que.forEach(async function(production) {
+            i ++
+            let cover = await Image.findOne({owner: production.id}).exec()
+            if (cover != null){
+                results[results.length] = [production.id,production.name,cover.imagePath]
+            }else{
+                results[results.length] = [production.id,production.name,'/images/icons/noImage.jpg']
             }
-        }
-        function keywordsFilter(preResults){
-            var prekeys = Object.keys(keywords).map((key)=>[key,keywords[key]])
-            var finalResults = {}
-            if (prekeys.length != 0){
-                var i = 0
-                preResults.forEach(res=>{
-                    i ++
-                    prekeys.forEach(key=>{
-                        if (res[1].keywords[key[0]].indexOf(key[1]) > -1){
-                            if (finalResults[res[0]] == undefined){
-                                finalResults[res[0]] = res
-                            }
-                        }
-                    })
-                    if (i == preResults.length){
-                        finalResult(finalResults)
-                    }
-                })
-            } else {
-                finalResult(preResults)
+            if (results.length == que.length){
+                io.emit('loading',false)
+                recieveResult(results)
             }
-        }
-        function finalResult(results){
-            var thrresults = Object.keys(results).map(key=>[results[key]])
-            var i = 0
-            thrresults.forEach(resu=>{
-                i++
-                if (i < thrresults.length){
-                    addResult(resu[0][0],thrresults.length)
-                }
-            })
-        }
-        var searchResults = []
-        async function addResult(id,i){
-                let document = await Document.findById(id).exec()
-                let image = await Image.findOne({owner: id}).exec()
-                searchResults[searchResults.length] = [document.id,document.name,image.imagePath]
-                if (i-searchResults.length <= 1){
-                    io.emit('loading',false)
-                    recieveResult(searchResults)
-                }
-        }
-    } catch (error) {
-        console.log(error);
+        })
+    } else {
+        io.emit('loading',false)
+        recieveResult(results)
     }
 }
 var results

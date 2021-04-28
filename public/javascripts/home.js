@@ -47,6 +47,11 @@ socket.on('results',results=>{
             d.appendChild(d2)
             o.appendChild(d)
         })
+    }else{
+        document.title = `MDA | (0)`
+        document.querySelectorAll('.noResults')[0].style.display = 'grid'
+        document.querySelectorAll('.results')[0].style.display = 'none'
+        document.querySelectorAll('.results .loading')[0].style.display = 'none'
     }
 })
 
