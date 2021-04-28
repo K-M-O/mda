@@ -41,33 +41,15 @@ async function processStart(queKeys){
         
         query = query.regex('name', new RegExp(qinput, 'i'))
         var names = await query.exec()
-        query = query.regex('folder', new RegExp(qinput, 'i'))
-        var folders = await query.exec()
-        query = query.regex('col', new RegExp(qinput, 'i'))
-        var collections = await query.exec()
-        query = query.regex('archive', new RegExp(qinput, 'i'))
-        var archive = await query.exec()
-        query = query.regex('description', new RegExp(qinput, 'i'))
-        var descriptions = await query.exec()
-        var arrays = [names,folders,collections,archive,descriptions],next = 0
-        function arrs(arr){
-            var i = 0
-            next ++
-            arr.forEach(item=>{
+            names.forEach(item=>{
                 i ++
                 if (results[item.id] == undefined) {
                     results[item.id] = {name:item.name,keywords:item.keywords,pubat:item.publishedAt}
                 }
                 if (i == arr.length){
-                    if (next < 5){
-                        arrs(arrays[next])
-                    } else {
-                        convert(results)
-                    }
+                    convert(results)
                 }
             })
-        }
-        arrs(arrays[next])
         function convert(obj){
             var filteredResults = Object.keys(obj).map((key)=>[key,obj[key]])
             dateFilter(filteredResults)
