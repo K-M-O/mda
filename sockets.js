@@ -1,5 +1,5 @@
-var Document = require('../models/document')
-var Image = require('../models/image')
+var Document = require('./models/document')
+var Image = require('./models/image')
 exports.quer = (socket)=>{
     socket.on('queue', async queKeys=>{
         try {
