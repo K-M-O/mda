@@ -5,9 +5,10 @@ const router = express.Router()
 const controller = require('../controllers/documentsCo')
 const checkAuth = require('../middleware/checkAuth')
 
+router.get('/show/:id', controller.getDoucment)
+
 router.use(checkAuth.token)
 
-router.get('/show/:id', controller.getDoucment)
 router.get('/new/:type', checkAuth.admin, controller.getNewDocument)
 router.post('/new/:type', checkAuth.admin, controller.postCreateDocument, controller.postCreateDocumentSaveImages)
 
